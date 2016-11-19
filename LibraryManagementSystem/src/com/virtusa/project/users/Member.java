@@ -16,7 +16,7 @@ public class Member extends User{
 	
 	@Override
 	@Id
-	@Column(name = "adminId")
+	@Column(name = "memberId")
 	public int getId() {
 		// TODO Auto-generated method stub
 		return super.getId();

@@ -28,22 +28,26 @@ public class ServiceMain {
 		System.out.println();
         System.out.print("Login as : \n\t\t1.Admin\n\t\t2.Member\n\t\t3.Quit\n\nEnter Choice:");
 	}
-	protected int intEntry(){
+	protected int intEntry(String str){
+		System.out.println("Enter "+str);
 		int intValue = scanner.nextInt();
 		scanner.close();
 		return intValue;
 	}
-	protected String stringEntry(){
+	protected String stringEntry(String str){
+		System.out.println("Enter "+str);
 		String stringValue = scanner.next();
 		scanner.close();
 		return stringValue;
 	}
-	protected long longEntry(){
+	protected long longEntry(String str){
+		System.out.println("Enter "+str);
 		long longValue = scanner.nextLong();
 		scanner.close();
 		return longValue;
 	}
-	protected double doubleEntry(){
+	protected double doubleEntry(String str){
+		System.out.println("Enter "+str);
 		double doubleValue = scanner.nextDouble();
 		scanner.close();
 		return doubleValue;

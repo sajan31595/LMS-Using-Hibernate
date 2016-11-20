@@ -5,14 +5,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.virtusa.project.ServiceMain;
 import com.virtusa.project.books.Book;
 import com.virtusa.project.users.Admin;
 import com.virtusa.project.users.Member;
 
 public class DatabaseServices {
-	
-	ServiceMain serviceMain = new ServiceMain();
 
 	public boolean authenticateAdmin(int adminId,String passwd) {
 		Configuration cfg = DatabaseServices.config();
@@ -26,18 +23,18 @@ public class DatabaseServices {
 				transaction.commit();
 				session.close();
 				sessionFactory.close();
-				serviceMain.printAcknowledgeMessage("\nAuthentication Successful\n");
+				System.out.println("\nAuthentication Successful\n");
 				return true;
 			}
 			else{
 				transaction.commit();
 				session.close();
 				sessionFactory.close();
-				serviceMain.printAcknowledgeMessage("\nInvalid User ID or Password\n");
+				System.out.println("\nInvalid User ID or Password\n");
 				return false;
 			}
 		}
-		serviceMain.printAcknowledgeMessage("\nUser ID does not exist\n");
+		System.out.println("\nUser ID does not exist\n");
 		return false;
 	}
 	public boolean authenticateMember(int mamberId,String passwd) {
@@ -46,24 +43,24 @@ public class DatabaseServices {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		
-		if(validateAdminId(mamberId)){
+		if(validateMemberId(mamberId)){
 			Member member = (Member) session.get(Member.class, mamberId);
 			if(member.getId() == mamberId && member.getUserPassword().equals(passwd)){
 				transaction.commit();
 				session.close();
 				sessionFactory.close();
-				serviceMain.printAcknowledgeMessage("\nAuthentication Successful\n");
+				System.out.println("\nAuthentication Successful\n");
 				return true;
 			}
 			else{
 				transaction.commit();
 				session.close();
 				sessionFactory.close();
-				serviceMain.printAcknowledgeMessage("\nInvalid User ID or Password\n");
+				System.out.println("\nInvalid User ID or Password\n");
 				return false;
 			}
 		}
-		serviceMain.printAcknowledgeMessage("\nUser ID does not exist\n");
+		System.out.println("\nUser ID does not exist\n");
 		return false;
 	}
 	public boolean validateBookId(int bookId) {

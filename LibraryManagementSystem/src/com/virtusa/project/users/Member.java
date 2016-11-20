@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import com.virtusa.project.books.Book;
 
 @Entity
-@Table(name = "member")
+@Table(name = "members")
 public class Member extends User{
 	
 	@Override

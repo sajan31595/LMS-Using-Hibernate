@@ -12,11 +12,12 @@ import org.hibernate.criterion.Restrictions;
 
 import com.virtusa.project.ServiceMain;
 import com.virtusa.project.books.Book;
+import com.virtusa.project.services.database.DatabaseServices;
 
 public class BookServicesUtil {
 	
 	public void sortBooksById(){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Book.class);
@@ -30,9 +31,8 @@ public class BookServicesUtil {
 		session.close();
 		sessionFactory.close();
 	}
-	
 	public void sortBooksByName(){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Book.class);
@@ -47,7 +47,7 @@ public class BookServicesUtil {
 		sessionFactory.close();
 	}
 	public void sortBooksByRating(){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
@@ -63,7 +63,7 @@ public class BookServicesUtil {
 		sessionFactory.close();
 	}
 	public  void sortByAuthor(){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
@@ -79,7 +79,7 @@ public class BookServicesUtil {
 		sessionFactory.close();
 	}
 	public void searchByID(int id){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Book book =(Book)session.get(Book.class, id);
@@ -90,7 +90,7 @@ public class BookServicesUtil {
 		sessionFactory.close();
 	}
 	public void searchByName(String name){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
@@ -109,7 +109,7 @@ public class BookServicesUtil {
 		sessionFactory.close();
 	}
 	public void searchByAuthor(String author){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
@@ -126,9 +126,8 @@ public class BookServicesUtil {
 		session.close();
 		sessionFactory.close();
 	}
-	
 	public void searchByRating(double rating){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
@@ -147,9 +146,8 @@ public class BookServicesUtil {
 		session.close();
 		sessionFactory.close();
 	}
-	
 	public void displayBookList(){
-		Configuration configuration = ServiceMain.config();
+		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
@@ -165,11 +163,7 @@ public class BookServicesUtil {
 		session.close();
 		sessionFactory.close();
 	}
-	
 	public void issueBook(){
 	}
 	public void returnBook(){}
-	
-
-	
 }

@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import org.hibernate.cfg.Configuration;
 
+import com.virtusa.project.services.database.DatabaseServices;
+
 public class ServiceMain {
 	
 	Scanner scanner = new Scanner(System.in);
@@ -24,38 +26,36 @@ public class ServiceMain {
         }
         System.out.print("\n\n\n\n");
 	}
+	protected void homePage() {
+        printAcknowledgeMessage("\nLogin as : \n\t\t1.Admin\n\t\t2.Member\n\t\t3.Quit\n\nEnter Choice:");
+	}
 	protected void loginPage() {
-		System.out.println();
-        System.out.print("Login as : \n\t\t1.Admin\n\t\t2.Member\n\t\t3.Quit\n\nEnter Choice:");
+		int adminId = intEntry("ID");
+		String passwd = stringEntry("password");
+		DatabaseServices databaseServices = new DatabaseServices();
+		databaseServices.authenticateAdmin(adminId, passwd);
 	}
 	public int intEntry(String type){
-		System.out.print("Enter " +type+ ": ");
+		System.out.print("\t\tEnter " +type+ ": ");
 		int intValue = scanner.nextInt();
-		scanner.close();
 		return intValue;
 	}
 	public String stringEntry(String type){
-		System.out.print("Enter " +type+ ": ");
+		System.out.print("\t\tEnter " +type+ ": ");
 		String stringValue = scanner.next();
-		scanner.close();
 		return stringValue;
 	}
 	public long longEntry(String type){
-		System.out.print("Enter " +type+ ": ");
+		System.out.print("\t\tEnter " +type+ ": ");
 		long longValue = scanner.nextLong();
-		scanner.close();
 		return longValue;
 	}
 	public double doubleEntry(String type){
-		System.out.print("Enter " +type+ ": ");
+		System.out.print("\t\tEnter " +type+ ": ");
 		double doubleValue = scanner.nextDouble();
-		scanner.close();
 		return doubleValue;
 	}
-	public static Configuration config(){
-		Configuration configuration = new Configuration();
-		configuration.configure("hibernate.cfg.xml");
-		return configuration;
+	public void printAcknowledgeMessage(String acknowledgeMessage){
+		System.out.println(acknowledgeMessage);
 	}
-	
 }

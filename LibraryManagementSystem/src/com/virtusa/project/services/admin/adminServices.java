@@ -13,6 +13,7 @@ import org.hibernate.criterion.Projections;
 
 import com.virtusa.project.ServiceMain;
 import com.virtusa.project.books.Book;
+import com.virtusa.project.services.database.DatabaseServices;
 import com.virtusa.project.users.Member;
 
 public class AdminServices {
@@ -21,7 +22,7 @@ public class AdminServices {
 
 	public void addUser() {
 
-		Configuration cfg = ServiceMain.config();
+		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -40,7 +41,7 @@ public class AdminServices {
 	}
 	public void displayUserDetails() {
 
-		Configuration cfg = ServiceMain.config();
+		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -60,7 +61,7 @@ public class AdminServices {
 	}
 	public void removeUser() {
 		
-		Configuration cfg = ServiceMain.config();
+		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -98,7 +99,7 @@ public class AdminServices {
 	}
 	public void updateUserDetails() {
 		
-		Configuration cfg = ServiceMain.config();
+		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -119,7 +120,7 @@ public class AdminServices {
 	}
 	public void addBook() {
 		
-		Configuration cfg = ServiceMain.config();
+		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -138,7 +139,7 @@ public class AdminServices {
 	}
 	public void updateBookDetails() {
 		
-		Configuration cfg = ServiceMain.config();
+		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -158,7 +159,7 @@ public class AdminServices {
 	}
 	public void removeBook() {
 		
-		Configuration cfg = ServiceMain.config();
+		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -195,7 +196,7 @@ public class AdminServices {
 
 	}
 	public void displayBookDetails() {
-		Configuration cfg = ServiceMain.config();
+		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();

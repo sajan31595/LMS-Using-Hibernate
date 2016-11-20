@@ -18,22 +18,24 @@ import com.virtusa.project.users.Member;
 
 public class AdminServices {
 
-	ServiceMain serviceMain = new ServiceMain();
+	
 
 	public void addUser() {
-
-		Configuration cfg = DatabaseServices.config();
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
-
+		
+		ServiceMain serviceMain = new ServiceMain();
 		Member member = new Member();
 		member.setId(serviceMain.intEntry("Id"));
 		member.setUserName(serviceMain.stringEntry("UserName"));
 		member.setUserPassword(serviceMain.stringEntry("Password"));
 		member.setPhoneNumber(serviceMain.longEntry("Phone No"));
 
+		Configuration cfg = DatabaseServices.config();
+		SessionFactory sessionFactory = cfg.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+
 		session.save(member);
+		
 		transaction.commit();
 		session.close();
 		sessionFactory.close();
@@ -61,6 +63,7 @@ public class AdminServices {
 	}
 	public void removeUser() {
 		
+		ServiceMain serviceMain = new ServiceMain();
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -99,6 +102,7 @@ public class AdminServices {
 	}
 	public void updateUserDetails() {
 		
+		ServiceMain serviceMain = new ServiceMain();
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -120,6 +124,7 @@ public class AdminServices {
 	}
 	public void addBook() {
 		
+		ServiceMain serviceMain = new ServiceMain();
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -139,6 +144,7 @@ public class AdminServices {
 	}
 	public void updateBookDetails() {
 		
+		ServiceMain serviceMain = new ServiceMain();
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -159,6 +165,7 @@ public class AdminServices {
 	}
 	public void removeBook() {
 		
+		ServiceMain serviceMain = new ServiceMain();
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();

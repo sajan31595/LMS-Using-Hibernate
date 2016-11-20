@@ -4,12 +4,14 @@ import java.util.Scanner;
 
 import org.hibernate.cfg.Configuration;
 
+import com.virtusa.project.services.admin.AdminServices;
 import com.virtusa.project.services.database.DatabaseServices;
 
 public class ServiceMain {
 
 	Scanner scanner = new Scanner(System.in);
 	DatabaseServices databaseServices = new DatabaseServices();
+	AdminServices adminServices = new AdminServices();
 
 	protected void splashScreen() throws InterruptedException {
 
@@ -60,11 +62,69 @@ public class ServiceMain {
 		System.out
 				.print("\n\nLMS>ADMIN>\n\nADMIN Page : \n\t\t1.Add User\n\t\t2.Update User Details\n\t\t3.Remove User\n\t\t4.Display User Details"
 						+ "\n\t\t5.Add Book\n\t\t6.Change Book Availability\n\t\t7.Delete Book\n\t\t8.Display Book Details\n\t\t9.Logout\n\t\t10.Quit\n\nEnter Choice:");
-
+		switch (2) {
+            case 1:
+            	System.out.println("Enter the Details of the user : ");
+            	adminServices.addUser();
+                break;
+            case 2:
+            	adminServices.updateUserDetails();
+            	break;
+            case 3:
+            	adminServices.removeUser();
+            	break;
+            case 4:
+            	adminServices.displayUserDetails();
+            	break;
+            case 5:
+            	adminServices.addBook();
+            	break;
+            case 6:
+            	adminServices.updateBookDetails();
+            	break;
+            case 7:
+            	adminServices.removeBook();
+            	break;
+            case 8:
+            	adminServices.displayBookDetails();
+            	break;
+            case 9:
+            	//logout
+            	break;
+            case 10:
+            	System.exit(0);
+            default:
+            	break;
+		}
 	}
 	protected void memberPage() {
 		System.out.print(
-				"\n\nLMS>MEMBER>\n\nMEMBER : \n\t\t1.Issue book\n\t\t2.Return Book\n\t\t3.Search Books\n\t\t4.Logout\n\t\t5.Quit\n\nEnter Choice:");
+				"\n\nLMS>MEMBER>\n\nMEMBER : \n\t\t"
+				+ "1.Issue book\n\t\t"
+				+ "2.Return Book\n\t\t"
+				+ "3.View Book List\n\t\t"
+				+ "4.Search Books\n\t\t"
+				+ "5.Change Password\n\t\t"
+				+ "6.Logout\n\t\t"
+				+ "7.Quit\n\nEnter Choice:");
+		switch(1){
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				System.exit(0);
+			default:
+				break;
+		}
 	}
 
 	public int intEntry(String type) {

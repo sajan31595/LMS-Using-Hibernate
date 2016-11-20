@@ -1,68 +1,169 @@
 package com.virtusa.project.services.book;
 
-import java.util.Scanner;
+import java.util.Iterator;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import com.virtusa.project.ServiceMain;
+import com.virtusa.project.books.Book;
+import com.virtusa.project.services.database.DatabaseServices;
 
 public class BookServices {
-	BookServicesUtil bookServicesutil = new BookServicesUtil();
 	
-	public void sortBooks(int n) {
-
-        // System.out.println("Enter 1 for Sort by ID");
-        // System.out.println("Enter 2 for Sort by Name");
-        // System.out.println("Enter 3 for Sort by Author");
-        // System.out.println("Enter 4 for Sort by Rating");
-        switch (n) {
-        case 1:
-        	bookServicesutil.sortBooksById();
-            break;
-        case 2:
-        	bookServicesutil.sortBooksByName();
-            break;
-        case 3:
-            bookServicesutil.sortByAuthor();
-            break;
-        case 4:
-           bookServicesutil.sortByAuthor();
-            break;
-        default:
-            System.out.println("Enter a valid choice");
-        }
-    }
-    /*
-     * to search a book in the database.
-     */
-    public void searchBooks() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter 1 for Search by ID");
-        System.out.println("Enter 2 for Search by Name");
-        System.out.println("Enter 3 for Search by Author");
-        System.out.println("Enter 4 for Search by Rating (return greter than id)");
-        int n = Integer.parseInt(sc.next());
-        switch (n) {
-        case 1:
-            System.out.println("Enter the Id to search");
-            int id = sc.nextInt();
-            bookServicesutil.searchByID(id);
-            break;
-        case 2:
-            System.out.println("Enter the Book Name to search");
-            String name = sc.next();
-            bookServicesutil.searchByName(name);
-            break;
-        case 3:
-            System.out.println("Enter the Author Name to search");
-            String author = sc.next();
-            bookServicesutil.searchByAuthor(author);
-            break;
-        case 4:
-            System.out.println("Enter the Rating to search");
-            double rating = sc.nextDouble();
-           bookServicesutil.searchByRating(rating);
-            break;
-        default:
-            System.out.println("Enter a valid choice");
-        }
-        sc.close();
-    }
+	public void sortBooksById(){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(Book.class);
+		criteria.addOrder(Order.asc("BOOKID"));
+		List<Book> books = criteria.list();
+		Iterator iterator = books.iterator();
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void sortBooksByName(){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(Book.class);
+		criteria.addOrder(Order.asc("bookname"));
+		List<Book> books = criteria.list();
+		Iterator iterator = books.iterator();
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void sortBooksByRating(){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		Criteria criteria = session.createCriteria(Book.class);
+		criteria.addOrder(Order.asc("rating"));
+		List<Book> books = criteria.list();
+		Iterator iterator = books.iterator();
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void sortByAuthor(){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		Criteria criteria = session.createCriteria(Book.class);
+		criteria.addOrder(Order.asc("rating"));
+		List<Book> books = criteria.list();
+		Iterator iterator = books.iterator();
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void searchByID(int id){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Book book =(Book)session.get(Book.class, id);
+		//print 
+		System.out.println(book.getBookId());
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void searchByName(String name){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		Criteria criteria = session.createCriteria(Book.class);
+		//need to fix for case insensitive matching
+		criteria.add(Restrictions.eq("bookname",name));
+		List<Book> book = criteria.list();
+		Iterator iterator = book.iterator();
+		
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void searchByAuthor(String author){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		Criteria criteria = session.createCriteria(Book.class);
+		//need to fix for case insensitive matching
+		criteria.add(Restrictions.eq("author",author));
+		List<Book> book = criteria.list();
+		Iterator iterator = book.iterator();
+		
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void searchByRating(double rating){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		Criteria criteria = session.createCriteria(Book.class);
+		//need to fix for case insensitive matching
+		criteria.add(Restrictions.gt("rating", rating));
+		criteria.addOrder(Order.asc("rating"));
+		
+		List<Book> book = criteria.list();
+		Iterator iterator = book.iterator();
+		
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void displayBookList(){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		Criteria criteria = session.createCriteria(Book.class);
+		List<Book> book = criteria.list();
+		Iterator iterator = book.iterator();
+		
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		
+		
+		session.close();
+		sessionFactory.close();
+	}
+	public void issueBook(){
+	}
+	public void returnBook(){}
 }
-

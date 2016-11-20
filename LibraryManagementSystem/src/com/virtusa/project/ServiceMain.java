@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.hibernate.cfg.Configuration;
 
 import com.virtusa.project.services.admin.AdminServices;
+import com.virtusa.project.services.book.BookServices;
 import com.virtusa.project.services.database.DatabaseServices;
 
 public class ServiceMain {
@@ -12,6 +13,7 @@ public class ServiceMain {
 	Scanner scanner = new Scanner(System.in);
 	DatabaseServices databaseServices = new DatabaseServices();
 	AdminServices adminServices = new AdminServices();
+	BookServices bookServicesUtil = new BookServices();
 
 	protected void splashScreen() throws InterruptedException {
 
@@ -61,93 +63,177 @@ public class ServiceMain {
 	protected void adminPage() {
 		System.out
 				.print("\n\nLMS>ADMIN>\n\nADMIN Page : \n\t\t1.Add User\n\t\t2.Update User Details\n\t\t3.Remove User\n\t\t4.Display User Details"
-						+ "\n\t\t5.Add Book\n\t\t6.Change Book Availability\n\t\t7.Delete Book\n\t\t8.Display Book Details\n\t\t9.Logout\n\t\t10.Quit\n\nEnter Choice:");
-		switch (2) {
-            case 1:
-            	System.out.println("Enter the Details of the user : ");
-            	adminServices.addUser();
-                break;
-            case 2:
-            	adminServices.updateUserDetails();
-            	break;
-            case 3:
-            	adminServices.removeUser();
-            	break;
-            case 4:
-            	adminServices.displayUserDetails();
-            	break;
-            case 5:
-            	adminServices.addBook();
-            	break;
-            case 6:
-            	adminServices.updateBookDetails();
-            	break;
-            case 7:
-            	adminServices.removeBook();
-            	break;
-            case 8:
-            	adminServices.displayBookDetails();
-            	break;
-            case 9:
-            	//logout
-            	break;
-            case 10:
-            	System.exit(0);
-            default:
-            	break;
+						+ "\n\t\t5.Add Book\n\t\t6.Change Book Availability\n\t\t7.Delete Book\n\t\t8.Display Book Details\n\t\t9.Logout\n\t\t10.Quit\n\n");
+		int adminChoose = intEntry("Choice");
+		switch (adminChoose) {
+			case 1 :
+				System.out.println("Enter the Details of the user : ");
+				adminServices.addUser();
+				adminPage();
+				break;
+			case 2 :
+				adminServices.updateUserDetails();
+				adminPage();
+				break;
+			case 3 :
+				adminServices.removeUser();
+				adminPage();
+				break;
+			case 4 :
+				adminServices.displayUserDetails();
+				adminPage();
+				break;
+			case 5 :
+				adminServices.addBook();
+				adminPage();
+				break;
+			case 6 :
+				adminServices.updateBookDetails();
+				adminPage();
+				break;
+			case 7 :
+				adminServices.removeBook();
+				adminPage();
+				break;
+			case 8 :
+				adminServices.displayBookDetails();
+				adminPage();
+				break;
+			case 9 :
+				// logout
+				break;
+			case 10 :
+				System.exit(0);
+			default :
+				break;
 		}
 	}
 	protected void memberPage() {
 		System.out.print(
-				"\n\nLMS>MEMBER>\n\nMEMBER : \n\t\t"
-				+ "1.Issue book\n\t\t"
-				+ "2.Return Book\n\t\t"
-				+ "3.View Book List\n\t\t"
-				+ "4.Search Books\n\t\t"
-				+ "5.Change Password\n\t\t"
-				+ "6.Logout\n\t\t"
-				+ "7.Quit\n\nEnter Choice:");
-		switch(1){
-			case 1:
+				"\n\nLMS>MEMBER>\n\nMEMBER : \n\t\t" 
+						+ "1.Issue book\n\t\t"
+						+ "2.Return Book\n\t\t" 
+						+ "3.View Book List\n\t\t"
+						+ "4.Search Books\n\t\t" 
+						+ "5.Change Password\n\t\t"
+						+ "6.Logout\n\t\t" 
+						+ "7.Quit\n\nEnter Choice:4");
+		switch (4) {
+			case 1 :
+				// Issue
 				break;
-			case 2:
+			case 2 :
+				// Return
 				break;
-			case 3:
+			case 3 :
+				// View Book List
+				viewBookList();
 				break;
-			case 4:
+			case 4 :
+				searchBook();
 				break;
-			case 5:
+			case 5 :
 				break;
-			case 6:
+			case 6 :
 				break;
-			case 7:
+			case 7 :
 				System.exit(0);
-			default:
+			default :
 				break;
 		}
 	}
 
+	private void searchBook() {
+		System.out.print("\n\nLMS>MEMBER>ISSUE_BOOK>\n\nISSUE BOOK : \n\t\t"
+				+ "1.Search by ID\n\t\t"
+				+ "2.Search by Name\n\t\t"
+				+ "3.Search by Author\n\t\t" 
+				+ "4.Search by Rating"
+				+ "5.Go Back\n\t\t" 
+				+ "6.Logout\n\t\t"
+				+ "7.Quit\n\nEnter Choice:1");
+		switch (1) {
+			case 1:
+				bookServicesUtil.searchByID(101);
+				break;
+			case 2:
+				bookServicesUtil.searchByName("book1");
+				break;
+			case 3:
+				bookServicesUtil.searchByAuthor("Author1");
+				break;
+			case 4:
+				bookServicesUtil.searchByRating(4);
+				break;
+			case 5:
+				//go back
+				break;
+			case 6:
+				//logout
+				break;
+			case 7:
+				System.exit(0);
+			default:
+				printAcknowledgeMessage("Enter Valid Choice");
+				viewBookList();
+		}
+	}
+	private void viewBookList() {
+		System.out.print("\n\nLMS>MEMBER>ISSUE_BOOK>\n\nISSUE BOOK : \n\t\t"
+				+ "1.Sort by ID\n\t\t"
+				+ "2.Sort by Name\n\t\t"
+				+ "3.Sort by Author\n\t\t" 
+				+ "4.Sort by Rating"
+				+ "5.Go Back\n\t\t" 
+				+ "6.Logout\n\t\t"
+				+ "7.Quit\n\nEnter Choice:");
+		switch (1) {
+			case 1:
+				bookServicesUtil.sortBooksById();
+				break;
+			case 2:
+				bookServicesUtil.sortBooksByName();
+				break;
+			case 3:
+				bookServicesUtil.sortByAuthor();
+				break;
+			case 4:
+				bookServicesUtil.sortByAuthor();
+				break;
+			case 5:
+				//go back
+				break;
+			case 6:
+				//logout
+				break;
+			case 7:
+				System.exit(0);
+			default:
+				printAcknowledgeMessage("Enter Valid Choice");
+				viewBookList();
+		}
+	}
 	public int intEntry(String type) {
 		System.out.print("Enter " + type + ": ");
 		int intValue = scanner.nextInt();
 		return intValue;
 	}
 	public String stringEntry(String type) {
-		System.out.print("\t\tEnter " + type + ": ");
+		System.out.print("Enter " + type + ": ");
 		String stringValue = scanner.next();
 		return stringValue;
 	}
 	public long longEntry(String type) {
-		System.out.print("\t\tEnter " + type + ": ");
+		System.out.print("Enter " + type + ": ");
 		long longValue = scanner.nextLong();
 		return longValue;
 	}
 	public double doubleEntry(String type) {
-		System.out.print("\t\tEnter " + type + ": ");
+		System.out.print("Enter " + type + ": ");
 		double doubleValue = scanner.nextDouble();
 		return doubleValue;
 	}
-	public void printAcknowledgeMessage(String acknowledgeMessage) {
+	public static void printAcknowledgeMessage(String acknowledgeMessage) {
 		System.out.println(acknowledgeMessage);
 	}
 }

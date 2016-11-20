@@ -32,11 +32,17 @@ public class AdminServices {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
-
-		session.save(member);
 		
+		Transaction transaction = session.beginTransaction();
+		session.save(member);
 		transaction.commit();
+		
+		DatabaseServices databaseServices = new DatabaseServices();
+		if(databaseServices.validateMemberId(member.getId())){
+			ServiceMain.printAcknowledgeMessage("\nUser "+member.getUserName()+" added successfully\n");			
+		}else{
+			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
+		}
 		session.close();
 		sessionFactory.close();
 
@@ -68,34 +74,18 @@ public class AdminServices {
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
+		DatabaseServices databaseServices = new DatabaseServices();
 		
-		Criteria criteria = session.createCriteria(Member.class);
+		int memberId = serviceMain.intEntry("ID");
+		Member member = (Member) session.get(Member.class, memberId);
+		if(databaseServices.validateMemberId(member.getId())){
+			session.delete(member);		
+		}else{
+			ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
+		}
 		
-		int id = serviceMain.intEntry("Enter the id of the User :");
-		criteria.setProjection(Projections.property("studentId"));
-		List<Member> member = criteria.list();
-		int found=0;
-		Iterator it=member.iterator();
-		while(it.hasNext())
-		{
-			if(id==Integer.parseInt(it.next()+""));
-			{
-				found=1;
-				System.out.println("User exists!!!");
-				break;
-			}
-		}
-		if(found==1)
-		{
-			Query query = session.createQuery("delete from member where id=(?)");
-			query.setInteger("id", id);
-			transaction.commit();
-		}
-		else if(found==0)
-		{
-			System.out.println("User doesnot exist \nTryagain!!!!\n ");
-			new AdminServices().removeUser();
-		}		
+		transaction.commit();
+		ServiceMain.printAcknowledgeMessage("\nUser Deleted Successfully\n");
 		session.close();
 		sessionFactory.close();
 
@@ -106,17 +96,17 @@ public class AdminServices {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
 		
+		Transaction transaction = session.beginTransaction();
 		System.out.println("Update the Details of User");
-		int id = serviceMain.intEntry("Enter the id of the User :");
+		int id = serviceMain.intEntry("ID");
 		Member member = (Member)session.get(Member.class, id);
 		member.setUserName(serviceMain.stringEntry("UserName"));
 		member.setUserPassword(serviceMain.stringEntry("Password"));
 		member.setPhoneNumber(serviceMain.longEntry("Phone No"));
 		session.saveOrUpdate(member);
-		
-		
+		transaction.commit();
+		ServiceMain.printAcknowledgeMessage("\nUser Updated Successfully\n");
 		session.close();
 		sessionFactory.close();
 		

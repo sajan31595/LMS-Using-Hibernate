@@ -48,7 +48,7 @@ public class InitiateMain {
 		
 		
 		Configuration configuration = new Configuration();
-		configuration.configure("hibernate.cfg.xml");
+		//configuration.configure("hibernate.cfg.xml");
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();

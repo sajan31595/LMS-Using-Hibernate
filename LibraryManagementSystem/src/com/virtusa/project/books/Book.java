@@ -24,6 +24,12 @@ public class Book {
 	public int getBookId() {
 		return bookId;
 	}
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}

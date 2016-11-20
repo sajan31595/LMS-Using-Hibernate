@@ -1,5 +1,6 @@
 package com.virtusa.project.users;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -62,8 +63,20 @@ public class Member extends User{
 	public List<Book> getBook() {
 		return book;
 	}
-	public void setBook(List<Book> book) {
-		this.book = book;
+	public void setBook(Book book) {
+		this.book.add(book);
+	}
+	public boolean removeIssuedBooks(int bookId){
+		//Used to remove given issued book from book list 
+		boolean flag=false;
+		for(Iterator<Book> iter = book.listIterator();iter.hasNext(); ){
+			Book obj =iter.next();
+			if(obj.getBookId() == bookId){
+				iter.remove();
+				flag=true;
+			}
+		}
+		return flag;
 	}
 	@Override
 	public String toString() {

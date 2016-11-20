@@ -134,6 +134,7 @@ public class AdminServices {
 
 		session.save(book);
 		transaction.commit();
+		serviceMain.printAcknowledgeMessage("\nBook added successfully\n");
 		session.close();
 		sessionFactory.close();
 	}

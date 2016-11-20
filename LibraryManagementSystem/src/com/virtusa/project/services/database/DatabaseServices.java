@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import com.virtusa.project.ServiceMain;
 import com.virtusa.project.books.Book;
 import com.virtusa.project.users.Admin;
 import com.virtusa.project.users.Member;
@@ -127,5 +128,36 @@ public class DatabaseServices {
 		Configuration configuration = new Configuration();
 		configuration.configure("hibernate.cfg.xml");
 		return configuration;
+	}
+	public void changePassword(int memberId) {
+		Configuration cfg = DatabaseServices.config();
+		SessionFactory sessionFactory = cfg.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		ServiceMain serviceMain = new ServiceMain();
+		
+		Member member = (Member) session.get(Member.class, memberId);
+		String oldPassword = serviceMain.stringEntry("Current Password");
+		if(oldPassword.equals(member.getUserPassword())){
+			String newPassword = serviceMain.stringEntry("New Password");
+			String confirmPassword = serviceMain.stringEntry("Confirm Password");
+			if(newPassword.equals(confirmPassword) && !newPassword.equals(oldPassword)){
+				member.setUserPassword(newPassword);
+				session.saveOrUpdate(member);
+				serviceMain.printAcknowledgeMessage("\nPassword Updated Successfully\n");
+			}
+			else{
+				serviceMain.printAcknowledgeMessage("\nPassword didn't Match or Password didn't change\n");
+				changePassword(memberId);
+			}
+		}else{
+			serviceMain.printAcknowledgeMessage("\nWrong Password\n");
+			changePassword(memberId);
+		}
+		
+		
+		transaction.commit();
+		session.close();
+		sessionFactory.close();
 	}
 }

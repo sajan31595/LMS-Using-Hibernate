@@ -38,21 +38,24 @@ public class ServiceMain {
 	protected int loginPage(int choice) {
 		switch (choice) {
 			case 1 :
+				System.out.println("\nADMIN Login");
 				int adminId = intEntry("ID");
 				String adminPassword = stringEntry("password");
-				if (databaseServices.authenticateAdmin(adminId, adminPassword))
-					return 1;
-				return 0;
+				if (databaseServices.authenticateAdmin(adminId, adminPassword)){
+					adminPage();
+				}
+				LibraryManagementSystemMain.initiate();
 			case 2 :
+				System.out.println("\n Member Login");
 				int memberId = intEntry("ID");
 				String memberPassword = stringEntry("password");
-				if (databaseServices.authenticateMember(memberId,
-						memberPassword))
-					return 1;
-				return 0;
+				if (databaseServices.authenticateMember(memberId,memberPassword)){
+					memberPage(memberId);
+				}
+				LibraryManagementSystemMain.initiate();
 			case 3 :
+				printAcknowledgeMessage("\nThank U Vigit Again\n");
 				System.exit(0);
-				return 0;
 			default :
 				System.out.println("Invalid Choice");
 				choice = intEntry("Choice");
@@ -101,14 +104,16 @@ public class ServiceMain {
 				break;
 			case 9 :
 				// logout
+				LibraryManagementSystemMain.initiate();
 				break;
 			case 10 :
 				System.exit(0);
 			default :
-				break;
+				printAcknowledgeMessage("\nWrong Choice\n");
+				adminPage();
 		}
 	}
-	protected void memberPage() {
+	protected void memberPage(int memberId) {
 		System.out.print(
 				"\n\nLMS>MEMBER>\n\nMEMBER : \n\t\t" 
 						+ "1.Issue book\n\t\t"
@@ -117,100 +122,122 @@ public class ServiceMain {
 						+ "4.Search Books\n\t\t" 
 						+ "5.Change Password\n\t\t"
 						+ "6.Logout\n\t\t" 
-						+ "7.Quit\n\nEnter Choice:4");
-		switch (4) {
+						+ "7.Quit\n\n");
+		int memberChoose = intEntry("Choice");
+		switch (memberChoose) {
 			case 1 :
-				// Issue
+				bookServicesUtil.issueBook(memberId, intEntry("Book ID"));
+				memberPage(memberId);
 				break;
 			case 2 :
-				// Return
+				bookServicesUtil.returnBook(memberId, intEntry("Book ID"));
+				memberPage(memberId);
 				break;
 			case 3 :
 				// View Book List
-				viewBookList();
+				viewBookList(memberId);
+				memberPage(memberId);
 				break;
 			case 4 :
-				searchBook();
+				searchBook(memberId);
+				memberPage(memberId);
 				break;
 			case 5 :
+				databaseServices.changePassword(memberId);
+				memberPage(memberId);
 				break;
 			case 6 :
+				LibraryManagementSystemMain.initiate();
 				break;
 			case 7 :
+				printAcknowledgeMessage("\nThank U Visit Again\n");
 				System.exit(0);
 			default :
-				break;
+				printAcknowledgeMessage("\nWrong Choice\n");
+				memberPage(memberId);
 		}
 	}
 
-	private void searchBook() {
+	private void searchBook(int memberId) {
 		System.out.print("\n\nLMS>MEMBER>ISSUE_BOOK>\n\nISSUE BOOK : \n\t\t"
 				+ "1.Search by ID\n\t\t"
 				+ "2.Search by Name\n\t\t"
 				+ "3.Search by Author\n\t\t" 
-				+ "4.Search by Rating"
+				+ "4.Search by Rating\n\t\t"
 				+ "5.Go Back\n\t\t" 
 				+ "6.Logout\n\t\t"
-				+ "7.Quit\n\nEnter Choice:1");
-		switch (1) {
+				+ "7.Quit\n");
+		int searchBookChoice = intEntry("Choice");
+		switch (searchBookChoice) {
 			case 1:
-				bookServicesUtil.searchByID(101);
+				bookServicesUtil.searchByID(intEntry("Book ID"));
+				searchBook(memberId);
 				break;
 			case 2:
-				bookServicesUtil.searchByName("book1");
+				bookServicesUtil.searchByName(stringEntry("Book Name"));
+				searchBook(memberId);
 				break;
 			case 3:
-				bookServicesUtil.searchByAuthor("Author1");
+				bookServicesUtil.searchByAuthor(stringEntry("Author Name"));
+				searchBook(memberId);
 				break;
 			case 4:
-				bookServicesUtil.searchByRating(4);
+				bookServicesUtil.searchByRating(doubleEntry("Rating"));
+				searchBook(memberId);
 				break;
 			case 5:
+				memberPage(memberId);
 				//go back
 				break;
 			case 6:
-				//logout
-				break;
+				LibraryManagementSystemMain.initiate();
 			case 7:
+				printAcknowledgeMessage("\nThank U Visit Again\n");
 				System.exit(0);
 			default:
-				printAcknowledgeMessage("Enter Valid Choice");
-				viewBookList();
+				printAcknowledgeMessage("Wrong Choice");
+				viewBookList(memberId);
 		}
 	}
-	private void viewBookList() {
+	private void viewBookList(int memberId) {
 		System.out.print("\n\nLMS>MEMBER>ISSUE_BOOK>\n\nISSUE BOOK : \n\t\t"
 				+ "1.Sort by ID\n\t\t"
 				+ "2.Sort by Name\n\t\t"
 				+ "3.Sort by Author\n\t\t" 
-				+ "4.Sort by Rating"
+				+ "4.Sort by Rating\n\t\t"
 				+ "5.Go Back\n\t\t" 
 				+ "6.Logout\n\t\t"
-				+ "7.Quit\n\nEnter Choice:");
-		switch (1) {
+				+ "7.Quit\n");
+		int bookView = intEntry("Choice");
+		switch (bookView) {
 			case 1:
 				bookServicesUtil.sortBooksById();
+				viewBookList(memberId);
 				break;
 			case 2:
 				bookServicesUtil.sortBooksByName();
+				viewBookList(memberId);
 				break;
 			case 3:
 				bookServicesUtil.sortByAuthor();
+				viewBookList(memberId);
 				break;
 			case 4:
-				bookServicesUtil.sortByAuthor();
+				bookServicesUtil.sortBooksByRating();
+				viewBookList(memberId);
 				break;
 			case 5:
 				//go back
-				break;
+				memberPage(memberId);
 			case 6:
 				//logout
-				break;
+				LibraryManagementSystemMain.initiate();
 			case 7:
+				printAcknowledgeMessage("\nThank U Visit Again\n");
 				System.exit(0);
 			default:
 				printAcknowledgeMessage("Enter Valid Choice");
-				viewBookList();
+				viewBookList(memberId);
 		}
 	}
 	public int intEntry(String type) {

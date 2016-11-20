@@ -63,6 +63,9 @@ public class Member extends User{
 	public List<Book> getBook() {
 		return book;
 	}
+	public void setBook(List<Book> book) {
+		this.book = book;
+	}
 	public void setBook(Book book) {
 		this.book.add(book);
 	}

@@ -21,14 +21,15 @@ public class Book {
 	@ManyToOne
 	@JoinColumn(name="memberId")
 	private Member member;
-	public int getBookId() {
-		return bookId;
-	}
+	
 	public Member getMember() {
 		return member;
 	}
-	public void setMember(Member member) {
+	public void setMember(Member member){
 		this.member = member;
+	}
+	public int getBookId() {
+		return bookId;
 	}
 	public void setBookId(int bookId) {
 		this.bookId = bookId;

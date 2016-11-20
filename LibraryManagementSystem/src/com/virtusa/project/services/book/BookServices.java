@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -13,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import com.virtusa.project.ServiceMain;
 import com.virtusa.project.books.Book;
 import com.virtusa.project.services.database.DatabaseServices;
+import com.virtusa.project.users.Member;
 
 public class BookServices {
 	
@@ -21,7 +23,7 @@ public class BookServices {
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Book.class);
-		criteria.addOrder(Order.asc("BOOKID"));
+		criteria.addOrder(Order.asc("bookId"));
 		List<Book> books = criteria.list();
 		Iterator iterator = books.iterator();
 		while(iterator.hasNext()){
@@ -36,7 +38,7 @@ public class BookServices {
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Book.class);
-		criteria.addOrder(Order.asc("bookname"));
+		criteria.addOrder(Order.asc("bookName"));
 		List<Book> books = criteria.list();
 		Iterator iterator = books.iterator();
 		while(iterator.hasNext()){
@@ -52,7 +54,7 @@ public class BookServices {
 		Session session = sessionFactory.openSession();
 		
 		Criteria criteria = session.createCriteria(Book.class);
-		criteria.addOrder(Order.asc("rating"));
+		criteria.addOrder(Order.desc("rating"));
 		List<Book> books = criteria.list();
 		Iterator iterator = books.iterator();
 		while(iterator.hasNext()){
@@ -68,7 +70,7 @@ public class BookServices {
 		Session session = sessionFactory.openSession();
 		
 		Criteria criteria = session.createCriteria(Book.class);
-		criteria.addOrder(Order.asc("rating"));
+		criteria.addOrder(Order.asc("author"));
 		List<Book> books = criteria.list();
 		Iterator iterator = books.iterator();
 		while(iterator.hasNext()){
@@ -79,12 +81,13 @@ public class BookServices {
 		sessionFactory.close();
 	}
 	public void searchByID(int id){
+	
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Book book =(Book)session.get(Book.class, id);
 		//print 
-		System.out.println(book.getBookId());
+		System.out.println(book);
 		
 		session.close();
 		sessionFactory.close();
@@ -96,7 +99,7 @@ public class BookServices {
 		
 		Criteria criteria = session.createCriteria(Book.class);
 		//need to fix for case insensitive matching
-		criteria.add(Restrictions.eq("bookname",name));
+		criteria.add(Restrictions.eq("bookName",name));
 		List<Book> book = criteria.list();
 		Iterator iterator = book.iterator();
 		
@@ -133,7 +136,7 @@ public class BookServices {
 		
 		Criteria criteria = session.createCriteria(Book.class);
 		//need to fix for case insensitive matching
-		criteria.add(Restrictions.gt("rating", rating));
+		criteria.add(Restrictions.ge("rating", rating));
 		criteria.addOrder(Order.asc("rating"));
 		
 		List<Book> book = criteria.list();
@@ -163,7 +166,70 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
-	public void issueBook(){
+	/*
+	 *  Book Issue 
+	 */
+	public void issueBook(int memberId, int bookId) {
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		Member member = (Member) session.get(Member.class, memberId);
+		if (member!=null){
+			if(member.getBook().size()<3){
+				Book book = (Book) session.get(Book.class, bookId);
+				if(book != null){
+					if(book.getMember() == null){
+						member.setBook(book);
+						book.setMember(member);
+						session.saveOrUpdate(book);
+						transaction.commit();
+						System.out.println("Book Succefully Issued");
+					}
+					else{
+						System.out.println("This book is Not available");
+					}
+				}
+				else{
+					System.out.println("Book Not found, Check Book Id Again");
+				}
+			}
+			else{
+				System.out.println("You Already Issued 3 books : Max Issue limit");
+			}
+		}
+		else{
+			System.out.println("Invalid User !!");
+		}
+
+		
+		session.close();
+		sessionFactory.close();
 	}
-	public void returnBook(){}
+	public void returnBook(int memberId,int bookId){
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		Member member = (Member) session.get(Member.class, memberId);
+		if (member!=null){
+			if(member.removeIssuedBooks(bookId)){
+				Book book = (Book) session.get(Book.class, bookId);
+				book.setMember(null);
+				session.saveOrUpdate(book);
+				transaction.commit();
+				System.out.println("Book Successfully returend, Thank you");
+			}
+			else{
+				System.out.println("Book is not found in your issued List");
+			}
+		}
+		else{
+			System.out.println("Invalid User !!");
+		}
+		session.close();
+		sessionFactory.close();
+	}
 }

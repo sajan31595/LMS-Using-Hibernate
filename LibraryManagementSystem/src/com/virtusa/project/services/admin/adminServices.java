@@ -78,14 +78,19 @@ public class AdminServices {
 		
 		int memberId = serviceMain.intEntry("ID");
 		Member member = (Member) session.get(Member.class, memberId);
-		if(databaseServices.validateMemberId(member.getId())){
+		if(databaseServices.validateMemberId(memberId)){
 			session.delete(member);		
 		}else{
 			ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
+			removeUser();
 		}
 		
 		transaction.commit();
-		ServiceMain.printAcknowledgeMessage("\nUser Deleted Successfully\n");
+		member = (Member) session.get(Member.class, memberId);
+		if(member == null)
+			ServiceMain.printAcknowledgeMessage("\nUser Deleted Successfully\n");
+		else
+			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
 		session.close();
 		sessionFactory.close();
 
@@ -124,7 +129,7 @@ public class AdminServices {
 		book.setBookId(serviceMain.intEntry("Book Id"));
 		book.setBookName(serviceMain.stringEntry("Book Name"));
 		book.setAuthor(serviceMain.stringEntry("Author Name"));
-		book.setEdition(serviceMain.intEntry("Phone No"));
+		book.setEdition(serviceMain.intEntry("Edition"));
 		book.setRating(serviceMain.doubleEntry("Rating"));
 
 		session.save(book);
@@ -141,14 +146,17 @@ public class AdminServices {
 		Transaction transaction = session.beginTransaction();
 		
 		System.out.println("Update the Details of User");
-		int id = serviceMain.intEntry("Enter the id of the User :");
+		int id = serviceMain.intEntry("ID");
 		Book book = (Book)session.get(Book.class, id);
 		book.setBookName(serviceMain.stringEntry("Book Name"));
 		book.setAuthor(serviceMain.stringEntry("Author Name"));
-		book.setEdition(serviceMain.intEntry("Phone No"));
+		book.setEdition(serviceMain.intEntry("Edition"));
 		book.setRating(serviceMain.doubleEntry("Rating"));
 		
+		session.saveOrUpdate(book);
 		
+		transaction.commit();
+		ServiceMain.printAcknowledgeMessage("\nBook Updated Successfully\n");
 		session.close();
 		sessionFactory.close();
 
@@ -161,33 +169,24 @@ public class AdminServices {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		
-		Criteria criteria = session.createCriteria(Member.class);
+		DatabaseServices databaseServices = new DatabaseServices();
 		
-		int id = serviceMain.intEntry("Enter the id of the Book :");
-		criteria.setProjection(Projections.property("bookId"));
-		List<Book> book = criteria.list();
-		int found=0;
-		Iterator it=book.iterator();
-		while(it.hasNext())
-		{
-			if(id==Integer.parseInt(it.next()+""));
-			{
-				found=1;
-				System.out.println("Book exists!!!");
-				break;
-			}
+		int bookId = serviceMain.intEntry("ID");
+		Book book = (Book) session.get(Book.class, bookId);
+		if(databaseServices.validateBookId(bookId)){
+			session.delete(book);		
+		}else{
+			ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
+			removeBook();
 		}
-		if(found==1)
-		{
-			Query query = session.createQuery("delete from book where id=(?)");
-			query.setInteger("id", id);
-			transaction.commit();
-		}
-		else if(found==0)
-		{
-			System.out.println("Book doesnot exist \nTryagain!!!!\n ");
-			new AdminServices().removeUser();
-		}		
+		
+		transaction.commit();
+		book = (Book) session.get(Book.class, bookId);
+		if(book == null)
+			ServiceMain.printAcknowledgeMessage("\nBook Deleted Successfully\n");
+		else
+			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
+				
 		session.close();
 		sessionFactory.close();
 

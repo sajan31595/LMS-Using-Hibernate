@@ -51,5 +51,11 @@ public class Book {
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
+	@Override
+	public String toString() {
+		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", author="
+				+ author + ", edition=" + edition + ", rating=" + rating
+				+ ", member=" + member + "]";
+	}
 
 }

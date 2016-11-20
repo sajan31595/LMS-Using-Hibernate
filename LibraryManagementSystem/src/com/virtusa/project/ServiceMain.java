@@ -63,7 +63,7 @@ public class ServiceMain {
 	protected void adminPage() {
 		System.out
 				.print("\n\nLMS>ADMIN>\n\nADMIN Page : \n\t\t1.Add User\n\t\t2.Update User Details\n\t\t3.Remove User\n\t\t4.Display User Details"
-						+ "\n\t\t5.Add Book\n\t\t6.Change Book Availability\n\t\t7.Delete Book\n\t\t8.Display Book Details\n\t\t9.Logout\n\t\t10.Quit\n\n");
+						+ "\n\t\t5.Add Book\n\t\t6.Update Book Details\n\t\t7.Delete Book\n\t\t8.Display Book Details\n\t\t9.Logout\n\t\t10.Quit\n\n");
 		int adminChoose = intEntry("Choice");
 		switch (adminChoose) {
 			case 1 :

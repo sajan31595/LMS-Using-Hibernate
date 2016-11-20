@@ -65,4 +65,12 @@ public class Member extends User{
 	public void setBook(List<Book> book) {
 		this.book = book;
 	}
+	@Override
+	public String toString() {
+		return "Member [getId()=" + getId() + ", getUserName()=" + getUserName()
+				+ ", getPhoneNumber()=" + getPhoneNumber() + ", getBook()="
+				+ getBook() + "]";
+	}
+	
+	
 }

@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.virtusa.project.books.Book;
@@ -18,6 +21,8 @@ public class Member extends User{
 	@Override
 	@Id
 	@Column(name = "memberId")
+	@GeneratedValue( generator = "generatorM",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name="generatorM",sequenceName="MEMBER_SEQ") 
 	public int getId() {
 		// TODO Auto-generated method stub
 		return super.getId();

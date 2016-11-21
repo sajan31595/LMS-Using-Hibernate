@@ -12,6 +12,7 @@ import com.virtusa.project.users.Member;
 
 public class DatabaseServices {
 
+	@SuppressWarnings("deprecation")
 	public boolean authenticateAdmin(int adminId,String passwd) {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
@@ -38,6 +39,7 @@ public class DatabaseServices {
 		System.out.println("\nUser ID does not exist\n");
 		return false;
 	}
+	@SuppressWarnings("deprecation")
 	public boolean authenticateMember(int mamberId,String passwd) {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
@@ -64,6 +66,7 @@ public class DatabaseServices {
 		System.out.println("\nUser ID does not exist\n");
 		return false;
 	}
+	@SuppressWarnings("deprecation")
 	public boolean validateBookId(int bookId) {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
@@ -84,6 +87,7 @@ public class DatabaseServices {
 			return false;
 		}
 	}
+	@SuppressWarnings("deprecation")
 	public boolean validateMemberId(int memberId) {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
@@ -104,6 +108,7 @@ public class DatabaseServices {
 			return false;
 		}
 	}
+	@SuppressWarnings("deprecation")
 	public boolean validateAdminId(int adminId) {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
@@ -129,6 +134,7 @@ public class DatabaseServices {
 		configuration.configure("hibernate.cfg.xml");
 		return configuration;
 	}
+	@SuppressWarnings("deprecation")
 	public void changePassword(int memberId) {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
@@ -144,14 +150,14 @@ public class DatabaseServices {
 			if(newPassword.equals(confirmPassword) && !newPassword.equals(oldPassword)){
 				member.setUserPassword(newPassword);
 				session.saveOrUpdate(member);
-				serviceMain.printAcknowledgeMessage("\nPassword Updated Successfully\n");
+				ServiceMain.printAcknowledgeMessage("\nPassword Updated Successfully\n");
 			}
 			else{
-				serviceMain.printAcknowledgeMessage("\nPassword didn't Match or Password didn't change\n");
+				ServiceMain.printAcknowledgeMessage("\nPassword didn't Match or Password didn't change\n");
 				changePassword(memberId);
 			}
 		}else{
-			serviceMain.printAcknowledgeMessage("\nWrong Password\n");
+			ServiceMain.printAcknowledgeMessage("\nWrong Password\n");
 			changePassword(memberId);
 		}
 		

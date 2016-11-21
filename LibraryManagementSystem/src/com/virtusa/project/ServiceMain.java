@@ -2,8 +2,6 @@ package com.virtusa.project;
 
 import java.util.Scanner;
 
-import org.hibernate.cfg.Configuration;
-
 import com.virtusa.project.services.admin.AdminServices;
 import com.virtusa.project.services.book.BookServices;
 import com.virtusa.project.services.database.DatabaseServices;
@@ -15,19 +13,29 @@ public class ServiceMain {
 	AdminServices adminServices = new AdminServices();
 	BookServices bookServicesUtil = new BookServices();
 
-	protected void splashScreen() throws InterruptedException {
+	protected void splashScreen() {
 
 		String library = "Welcome to Library Management System[LMS]";
 		System.out.print("\n\n\n\n\t\t\t");
 		for (int index = 0; index < library.length(); index++) {
 			System.out.print(library.charAt(index));
-			Thread.sleep(100);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		System.out.print("\n\n\n\n");
 		System.out.println();
 		for (int i = 5; i >= 0; i--) {
 			System.out.print(i + "\t");
-			Thread.sleep(500);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		System.out.print("\n\n\n\n");
 	}
@@ -63,7 +71,7 @@ public class ServiceMain {
 		}
 		return 0;
 	}
-	protected void adminPage() {
+	private void adminPage() {
 		System.out
 				.print("\n\nLMS>ADMIN>\n\nADMIN Page : \n\t\t1.Add User\n\t\t2.Update User Details\n\t\t3.Remove User\n\t\t4.Display User Details"
 						+ "\n\t\t5.Add Book\n\t\t6.Update Book Details\n\t\t7.Delete Book\n\t\t8.Display Book Details\n\t\t9.Logout\n\t\t10.Quit\n\n");
@@ -113,7 +121,7 @@ public class ServiceMain {
 				adminPage();
 		}
 	}
-	protected void memberPage(int memberId) {
+	private void memberPage(int memberId) {
 		System.out.print(
 				"\n\nLMS>MEMBER>\n\nMEMBER : \n\t\t" 
 						+ "1.Issue book\n\t\t"
@@ -157,7 +165,6 @@ public class ServiceMain {
 				memberPage(memberId);
 		}
 	}
-
 	private void searchBook(int memberId) {
 		System.out.print("\n\nLMS>MEMBER>ISSUE_BOOK>\n\nISSUE BOOK : \n\t\t"
 				+ "1.Search by ID\n\t\t"
@@ -240,9 +247,18 @@ public class ServiceMain {
 				viewBookList(memberId);
 		}
 	}
+	
+
 	public int intEntry(String type) {
+		int intValue = 0;
 		System.out.print("Enter " + type + ": ");
-		int intValue = scanner.nextInt();
+		try{
+			intValue = scanner.nextInt();
+		}catch(Exception e){
+			printAcknowledgeMessage("\nInvalid Type\n");
+			scanner.next();
+			intEntry(type);
+		}
 		return intValue;
 	}
 	public String stringEntry(String type) {
@@ -251,15 +267,31 @@ public class ServiceMain {
 		return stringValue;
 	}
 	public long longEntry(String type) {
+		long longValue = 0l;
 		System.out.print("Enter " + type + ": ");
-		long longValue = scanner.nextLong();
+		try{
+			longValue = scanner.nextLong();
+		}catch(Exception e){
+			printAcknowledgeMessage("\nInvalid Type\n");
+			scanner.next();
+			longEntry(type);
+		}
 		return longValue;
 	}
 	public double doubleEntry(String type) {
+		double doubleValue = 0;
 		System.out.print("Enter " + type + ": ");
-		double doubleValue = scanner.nextDouble();
+		try{
+			doubleValue = scanner.nextDouble();
+		}catch(Exception e){
+			printAcknowledgeMessage("\nInvalid Type\n");
+			scanner.next();
+			doubleEntry(type);
+		}
 		return doubleValue;
 	}
+	
+
 	public static void printAcknowledgeMessage(String acknowledgeMessage) {
 		System.out.println(acknowledgeMessage);
 	}

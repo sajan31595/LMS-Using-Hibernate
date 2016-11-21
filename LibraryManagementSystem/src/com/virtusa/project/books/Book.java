@@ -1,9 +1,12 @@
 package com.virtusa.project.books;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.virtusa.project.users.Member;
@@ -13,6 +16,8 @@ import com.virtusa.project.users.Member;
 public class Book {
 	
 	@Id
+	@GeneratedValue( generator = "generatorB",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name="generatorB",sequenceName="BOOK_SEQ") 
 	private int bookId;
 	private String bookName;
 	private String author;

@@ -4,12 +4,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Projections;
 
 import com.virtusa.project.ServiceMain;
 import com.virtusa.project.books.Book;
@@ -24,12 +22,13 @@ public class AdminServices {
 		
 		ServiceMain serviceMain = new ServiceMain();
 		Member member = new Member();
-		member.setId(serviceMain.intEntry("Id"));
+		//member.setId(serviceMain.intEntry("Id"));
 		member.setUserName(serviceMain.stringEntry("UserName"));
 		member.setUserPassword(serviceMain.stringEntry("Password"));
 		member.setPhoneNumber(serviceMain.longEntry("Phone No"));
 
 		Configuration cfg = DatabaseServices.config();
+		@SuppressWarnings("deprecation")
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
@@ -47,6 +46,7 @@ public class AdminServices {
 		sessionFactory.close();
 
 	}
+	@SuppressWarnings({"unchecked", "deprecation", "rawtypes"})
 	public void displayUserDetails() {
 
 		Configuration cfg = DatabaseServices.config();
@@ -67,6 +67,7 @@ public class AdminServices {
 		sessionFactory.close();
 
 	}
+	@SuppressWarnings("deprecation")
 	public void removeUser() {
 		
 		ServiceMain serviceMain = new ServiceMain();
@@ -95,6 +96,7 @@ public class AdminServices {
 		sessionFactory.close();
 
 	}
+	@SuppressWarnings("deprecation")
 	public void updateUserDetails() {
 		
 		ServiceMain serviceMain = new ServiceMain();
@@ -117,6 +119,7 @@ public class AdminServices {
 		
 
 	}
+	@SuppressWarnings("deprecation")
 	public void addBook() {
 		
 		ServiceMain serviceMain = new ServiceMain();
@@ -126,7 +129,7 @@ public class AdminServices {
 		Transaction transaction = session.beginTransaction();
 
 		Book book = new Book();
-		book.setBookId(serviceMain.intEntry("Book Id"));
+		//book.setBookId(serviceMain.intEntry("Book Id"));
 		book.setBookName(serviceMain.stringEntry("Book Name"));
 		book.setAuthor(serviceMain.stringEntry("Author Name"));
 		book.setEdition(serviceMain.intEntry("Edition"));
@@ -134,10 +137,11 @@ public class AdminServices {
 
 		session.save(book);
 		transaction.commit();
-		serviceMain.printAcknowledgeMessage("\nBook added successfully\n");
+		ServiceMain.printAcknowledgeMessage("\nBook added successfully\n");
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings("deprecation")
 	public void updateBookDetails() {
 		
 		ServiceMain serviceMain = new ServiceMain();
@@ -162,6 +166,7 @@ public class AdminServices {
 		sessionFactory.close();
 
 	}
+	@SuppressWarnings("deprecation")
 	public void removeBook() {
 		
 		ServiceMain serviceMain = new ServiceMain();
@@ -192,6 +197,7 @@ public class AdminServices {
 		sessionFactory.close();
 
 	}
+	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void displayBookDetails() {
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();

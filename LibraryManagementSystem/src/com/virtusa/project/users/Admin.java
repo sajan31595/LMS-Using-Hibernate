@@ -2,7 +2,10 @@ package com.virtusa.project.users;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +15,8 @@ public class Admin extends User{
 	@Override
 	@Id
 	@Column(name = "adminId")
+	@GeneratedValue( generator = "generatorA",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name="generatorA",sequenceName="ADMIN_SEQ") 
 	public int getId() {
 		return super.getId();
 	}

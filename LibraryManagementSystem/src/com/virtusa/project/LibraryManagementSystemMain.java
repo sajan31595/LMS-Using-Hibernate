@@ -1,18 +1,10 @@
 package com.virtusa.project;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-
-import com.virtusa.project.services.database.DatabaseServices;
-import com.virtusa.project.users.Member;
-
 public class LibraryManagementSystemMain {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args){
 		ServiceMain serviceMain = new ServiceMain();
-		//serviceMain.splashScreen();
+		serviceMain.splashScreen();
 		initiate();
 	}
 	protected static void initiate() {

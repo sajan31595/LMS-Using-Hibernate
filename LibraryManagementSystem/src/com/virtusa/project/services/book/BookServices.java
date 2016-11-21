@@ -11,13 +11,13 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.virtusa.project.ServiceMain;
 import com.virtusa.project.books.Book;
 import com.virtusa.project.services.database.DatabaseServices;
 import com.virtusa.project.users.Member;
 
 public class BookServices {
 	
+	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void sortBooksById(){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -33,6 +33,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void sortBooksByName(){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -48,6 +49,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void sortBooksByRating(){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -64,6 +66,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void sortByAuthor(){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -80,6 +83,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings("deprecation")
 	public void searchByID(int id){
 	
 		Configuration configuration = DatabaseServices.config();
@@ -92,6 +96,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void searchByName(String name){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -111,6 +116,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings({"unchecked", "rawtypes", "deprecation"})
 	public void searchByAuthor(String author){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -129,6 +135,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void searchByRating(double rating){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -149,6 +156,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void displayBookList(){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -169,6 +177,7 @@ public class BookServices {
 	/*
 	 *  Book Issue 
 	 */
+	@SuppressWarnings("deprecation")
 	public void issueBook(int memberId, int bookId) {
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -207,6 +216,7 @@ public class BookServices {
 		session.close();
 		sessionFactory.close();
 	}
+	@SuppressWarnings("deprecation")
 	public void returnBook(int memberId,int bookId){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();

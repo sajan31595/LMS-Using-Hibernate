@@ -10,7 +10,7 @@
 * Return Book
 * Max `Book` issue limit is 3
 * can Search Books
-* can Short Books based on different Parameters
+* can Sort Books based on different Parameters
 
 ## Technology Used
 * Java

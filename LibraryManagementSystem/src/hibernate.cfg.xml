@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<!-- <hibernate-mapping>
+	<class name="com.virtusa.hibernate.inheritance.Employee" table="EmployeeInheritance">
+		<id name="employeeId" column="employeeId" type="long">
+			<generator class="increment" />
+			// This generates the primary key
+		</id>
+		<property name="name" column="name" />
+	</class>
+</hibernate-mapping> -->
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
+		<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+		<property name="connection.username">hr</property>
+		<property name="connection.password">hr</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">10</property>
+
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.OracleDialect</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Disable the second-level cache -->
+		<property name="hibernate.cache.use_second_level_cache">true</property> 
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+		<!-- <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property> -->
+
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">false</property>
+
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">update</property>
+
+		<!-- <mapping class="com.virtusa.hibernate.pojo.Employee" />
+		<mapping class="com.virtusa.hibernate.inheritance.Developer" />
+		<mapping class="com.virtusa.hibernate.inheritance.Tester" />
+		<mapping class="com.virtusa.hibernate.inheritance.Employee" />
+		<mapping class="com.virtusa.hibernate.embeddedtest.Employee" />
+		<mapping class="com.virtusa.hibernate.association.Developer" />
+		<mapping class="com.virtusa.hibernate.association.Employee" /> -->
+		<!-- <mapping class="com.virtusa.hibernate.association.manytoone.Employee" />
+		<mapping class="com.virtusa.hibernate.association.manytoone.Department" /> -->
+		<!-- <mapping class="com.virtusa.hibernate.association.Passport" />
+		<mapping class="com.virtusa.hibernate.association.Person" /> -->
+		<!-- <mapping class="com.virtusa.hibernate.association.onetomany.bidirectional.Employee" />
+		<mapping class="com.virtusa.hibernate.association.onetomany.bidirectional.Department" /> -->
+		<!-- <mapping class="com.virtusa.viral.onetomany.bidirectional.Employee" />
+		<mapping class="com.virtusa.viral.onetomany.bidirectional.Department" /> -->
+		<!-- <mapping class="com.virtusa.hibernate.hql.Employee" /> -->
+		<mapping class="com.virtusa.project.books.Book" />
+		<mapping class="com.virtusa.project.users.Admin" />
+		<mapping class="com.virtusa.project.users.Member" />
+
+	</session-factory>
+
+</hibernate-configuration>
